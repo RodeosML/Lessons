@@ -163,8 +163,8 @@ namespace AlgorithmsDataStructures
             var list = new LinkedList();
             var node1 = new Node(1);
             var node2 = new Node(2);
-            var node3 = new Node(2);
-            var node4 = new Node(3);
+            var node3 = new Node(3);
+            var node4 = new Node(2);
             list.AddInTail(node1);
             list.AddInTail(node2);
             list.AddInTail(node3);
@@ -174,7 +174,7 @@ namespace AlgorithmsDataStructures
 
             ///Проверяем целостность списка
             Assert.AreEqual(node1, list.head);
-            Assert.AreEqual(node4, list.tail);
+            Assert.AreEqual(node3, list.tail);
         }
 
         [TestMethod]

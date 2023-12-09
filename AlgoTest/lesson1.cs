@@ -107,8 +107,18 @@ namespace AlgorithmsDataStructures
                 head = head.next;
             }
 
+            while (tail != null && tail.value == _value)
+            {
+                Node current = head;
+                while (current.next != tail)
+                {
+                    current = current.next;
+                }
+                current.next = null;
+                tail = current;
+            }
+
             Node node = head;
-            //Cycle to loop through the list and check for all values for deletion
             while (node != null && node.next != null)
             {
                 if (node.next.value == _value)
@@ -121,6 +131,7 @@ namespace AlgorithmsDataStructures
                     node = node.next;
                 }
             }
+
         }
 
         public void Clear()
