@@ -45,7 +45,7 @@ namespace AlgorithmsDataStructures
 
         public LinkedList SumLists(LinkedList list1, LinkedList list2)
         {
-            //Check if the lists have different sizes
+            //Check length Linkedlists
             if (list1.Count() != list2.Count())
             {
                 throw new Exception("Length Linkedlists not equal");
