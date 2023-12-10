@@ -30,8 +30,27 @@ namespace AlgorithmsDataStructures
             tail = _item;
         }
 
+        public int Count()
+        {
+            Node node = head;
+            //Special var for counter value
+            int count = 0;
+            while (node != null)
+            {
+                count++;
+                node = node.next;
+            }
+            return count;
+        }
+
         public LinkedList SumLists(LinkedList list1, LinkedList list2)
         {
+            //Check if the lists have different sizes
+            if (list1.Count() != list2.Count())
+            {
+                throw new Exception("Length Linkedlists not equal");
+            }
+
             //Creating linkedlist for sum value
             LinkedList sumList = new LinkedList();
 
