@@ -97,41 +97,32 @@ namespace AlgorithmsDataStructures
 
         public void RemoveAll(int _value)
         {
-            //Checking the empty list
-            if (head == null)
-                return;
-
-            //A special case of checking the sequence head of a node in list for a given value
-            while (head != null && head.value == _value)
-            {
-                head = head.next;
-            }
-
-            while (tail != null && tail.value == _value)
-            {
-                Node current = head;
-                while (current.next != tail)
-                {
-                    current = current.next;
-                }
-                current.next = null;
-                tail = current;
-            }
-
+            //Pevious node
+            Node preNode = null;
             Node node = head;
-            while (node != null && node.next != null)
+            while (node != null)
             {
-                if (node.next.value == _value)
+                if (node.value == _value)
                 {
-                    if (node.next == tail) tail = node;
-                    node.next = node.next.next;
+                    if (node == tail)
+                    {
+                        tail = preNode;
+                    }
+                    if (preNode != null)
+                    {
+                        preNode.next = node.next;
+                    }
+                    else
+                    {
+                        head = node.next;
+                    }
                 }
                 else
                 {
-                    node = node.next;
+                    preNode = node;
                 }
+                node = node.next;
             }
-
         }
 
         public void Clear()
