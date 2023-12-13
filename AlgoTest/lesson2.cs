@@ -82,16 +82,19 @@ namespace AlgorithmsDataStructures
             {
                 if (node.value == _value)
                 {
+                    //Checking unique node
                     if (node == head && node == tail)
                     {
                         head = null;
                         tail = null;
                     }
-                    else if (node == head)
+                    //Сhecking head node
+                    if (node == head)
                     {
                         node.next.prev = null;
                         head = node.next;
                     }
+                    //Checking tail node
                     else if (node == tail)
                     {
                         node.prev.next = null;
@@ -115,14 +118,14 @@ namespace AlgorithmsDataStructures
             Node node = head;
             while (node != null)
             {
-                //checking unique node
+                //Сhecking unique node
                 if (node == head && node == tail && node.value == _value)
                 {
                     head = null;
                     tail = null;
                     return;
                 }
-                //checking head node
+                //Сhecking head node
                 if (node == head && node.value == _value)
                 {
                     node.next.prev = null;
