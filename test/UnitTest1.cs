@@ -8,41 +8,10 @@ namespace AlgorithmsDataStructures
     public class LinkedListTests
     {
         [TestMethod]
-        public void AddInTail_MustAddNodeToEmptyList()
-        {
-            //Создаем экемпляр класса и заполняем его
-            var list = new LinkedList();
-            var node = new Node(1);
-
-            list.AddInTail(node);
-
-            //Проверяем утверждение
-            Assert.AreEqual(node, list.head);
-            Assert.AreEqual(node, list.tail);
-        }
-
-        [TestMethod]
-        public void AddInTail_MustAddNodeToNonEmptyList()
-        {
-            //Создаем 2 экемпляра классов и делаем их непустыми
-            var list = new LinkedList();
-            var node1 = new Node(1);
-            var node2 = new Node(2);
-
-            list.AddInTail(node1);
-            list.AddInTail(node2);
-
-            //Проверяем утверждение
-            Assert.AreEqual(node1, list.head);
-            Assert.AreEqual(node2, list.tail);
-            Assert.AreEqual(node2, node1.next);
-        }
-
-        [TestMethod]
         public void Find_MustReturnNodeWithMatchingValue()
         {
             //Создаем экемпляр класса и заполняем его
-            var list = new LinkedList();
+            var list = new LinkedList2();
             var node1 = new Node(1);
             var node2 = new Node(2);
             var node3 = new Node(3);
@@ -50,7 +19,7 @@ namespace AlgorithmsDataStructures
             list.AddInTail(node2);
             list.AddInTail(node3);
 
-            
+
             var result = list.Find(2);
 
             //Проверяем утверждение
@@ -61,7 +30,7 @@ namespace AlgorithmsDataStructures
         public void Find_MustReturnNullIfNoMatchingValue()
         {
             //Создаем экемпляр класса и заполняем его
-            var list = new LinkedList();
+            var list = new LinkedList2();
             var node1 = new Node(1);
             var node2 = new Node(2);
             var node3 = new Node(3);
@@ -79,7 +48,7 @@ namespace AlgorithmsDataStructures
         public void FindAll_MustReturnListOfNodesWithMatchingValue()
         {
             //Создаем экемпляр класса и заполняем его
-            var list = new LinkedList();
+            var list = new LinkedList2();
             var node1 = new Node(1);
             var node2 = new Node(2);
             var node3 = new Node(2);
@@ -100,7 +69,7 @@ namespace AlgorithmsDataStructures
         public void FindAll_MustReturnEmptyListIfNoMatchingValue()
         {
             //Создаем экемпляр класса и заполняем его
-            var list = new LinkedList();
+            var list = new LinkedList2();
             var node1 = new Node(1);
             var node2 = new Node(2);
             var node3 = new Node(3);
@@ -115,31 +84,10 @@ namespace AlgorithmsDataStructures
         }
 
         [TestMethod]
-        public void Remove_MustRemoveNodeWithMatchingValue()
-        {
-            //Создаем экемпляр класса и заполняем его
-            var list = new LinkedList();
-            var node1 = new Node(1);
-            var node2 = new Node(2);
-            var node3 = new Node(3);
-            list.AddInTail(node1);
-            list.AddInTail(node2);
-            list.AddInTail(node3);
-
-            var result = list.Remove(2);
-
-            //Проверяем утверждение
-            Assert.IsTrue(result);
-            //Проверяем целостность списка
-            Assert.AreEqual(node1, list.head);
-            Assert.AreEqual(node3, list.tail);
-        }
-
-        [TestMethod]
         public void Remove_MustReturnFalseIfNoMatchingValue()
         {
             //Создаем экемпляр класса и заполняем его
-            var list = new LinkedList();
+            var list = new LinkedList2();
             var node1 = new Node(1);
             var node2 = new Node(2);
             var node3 = new Node(3);
@@ -157,14 +105,60 @@ namespace AlgorithmsDataStructures
         }
 
         [TestMethod]
+        public void Remove_MustRemoveNodeWithMatchingValue()
+        {
+            //Создаем экемпляр класса и заполняем его
+            var list = new LinkedList2();
+            var node1 = new Node(1);
+            var node2 = new Node(2);
+            var node3 = new Node(3);
+            var node4 = new Node(4);
+            list.AddInTail(node1);
+            list.AddInTail(node2);
+            list.AddInTail(node3);
+            list.AddInTail(node4);
+
+            var result = list.Remove(2);
+
+            //Проверяем утверждение
+            Assert.IsTrue(result);
+            //Проверяем целостность списка
+            Assert.AreEqual(node1, list.head);
+            Assert.AreEqual(node4, list.tail);
+            Assert.AreEqual(node3, list.tail.prev);
+
+            var result2 = list.Remove(1);
+
+            //Проверяем утверждение
+            Assert.IsTrue(result2);
+            //Проверяем целостность списка
+            Assert.AreEqual(null, list.head.prev);
+            Assert.AreEqual(null, list.tail.next);
+            Assert.AreEqual(null, list.tail.prev.prev);
+            Assert.AreEqual(null, list.tail.next);
+            Assert.AreEqual(node4, list.head.next);
+
+            var result3 = list.Remove(3);
+
+            //Проверяем утверждение
+            Assert.IsTrue(result3);
+            //Проверяем целостность списка
+            Assert.AreEqual(null, list.head.prev);
+            Assert.AreEqual(null, list.tail.next);
+            Assert.AreEqual(null, list.tail.prev);
+            Assert.AreEqual(null, list.tail.next);
+            Assert.AreEqual(node4, list.head);
+        }
+
+        [TestMethod]
         public void RemoveAll_MustRemoveAllNodesWithMatchingValue()
         {
             //Создаем экемпляр класса и заполняем его
-            var list = new LinkedList();
+            var list = new LinkedList2();
             var node1 = new Node(1);
             var node2 = new Node(2);
-            var node3 = new Node(2);
-            var node4 = new Node(3);
+            var node3 = new Node(3);
+            var node4 = new Node(2);
             list.AddInTail(node1);
             list.AddInTail(node2);
             list.AddInTail(node3);
@@ -174,14 +168,17 @@ namespace AlgorithmsDataStructures
 
             ///Проверяем целостность списка
             Assert.AreEqual(node1, list.head);
-            Assert.AreEqual(node4, list.tail);
+            Assert.AreEqual(node3, list.tail);
+            Assert.AreEqual(null, list.tail.next);
+            Assert.AreEqual(node3, list.head.next);
+            Assert.AreEqual(node1, list.tail.prev);
         }
 
         [TestMethod]
         public void Clear_MustRemoveAllNodesFromList()
         {
             //Создаем экемпляр класса и заполняем его
-            var list = new LinkedList();
+            var list = new LinkedList2();
             var node1 = new Node(1);
             var node2 = new Node(2);
             var node3 = new Node(3);
@@ -200,7 +197,7 @@ namespace AlgorithmsDataStructures
         public void Count_MustReturnNumberOfNodesInList()
         {
             //Создаем экемпляр класса и заполняем его
-            var list = new LinkedList();
+            var list = new LinkedList2();
             var node1 = new Node(18);
             var node2 = new Node(25);
             var node3 = new Node(45);
@@ -222,7 +219,7 @@ namespace AlgorithmsDataStructures
         public void InsertAfter_MustInsertNodeAfterGivenNode()
         {
             //Создаем экемпляр класса и заполняем его
-            var list = new LinkedList();
+            var list = new LinkedList2();
             var node1 = new Node(1);
             var node2 = new Node(2);
             var node3 = new Node(3);
@@ -241,7 +238,7 @@ namespace AlgorithmsDataStructures
         public void InsertAfter_MustInsertANodeAtTheBeginningOfTheListIfTheGiveNodeIsNull()
         {
             //Создаем экемпляр класса и заполняем его
-            var list = new LinkedList();
+            var list = new LinkedList2();
             var node1 = new Node(1);
             var node2 = new Node(2);
             var node3 = new Node(3);
@@ -256,5 +253,6 @@ namespace AlgorithmsDataStructures
             Assert.AreEqual(node3, list.tail);
             Assert.AreEqual(node2, node1.next);
         }
+
     }
 }
