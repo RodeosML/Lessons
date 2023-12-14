@@ -89,7 +89,7 @@ namespace AlgorithmsDataStructures
                         tail = null;
                     }
                     //Сhecking head node
-                    if (node == head)
+                    else if (node == head)
                     {
                         node.next.prev = null;
                         head = node.next;
@@ -118,32 +118,35 @@ namespace AlgorithmsDataStructures
             Node node = head;
             while (node != null)
             {
-                //Сhecking unique node
-                if (node == head && node == tail && node.value == _value)
+                if (node.value == _value)
                 {
-                    head = null;
-                    tail = null;
-                    return;
+                    //Сhecking unique node
+                    if (node == head && node == tail)
+                    {
+                        head = null;
+                        tail = null;
+                        return;
+                    }
+                    //Сhecking head node
+                    if (node == head)
+                    {
+                        node.next.prev = null;
+                        head = node.next;
+                    }
+                    //Checking tail node
+                    if (node == tail)
+                    {
+                        node.prev.next = null;
+                        tail = node.prev;
+                    }
+                    else
+                    {
+                        //Remove use two links
+                        node.prev.next = node.next;
+                        node.next.prev = node.prev;
+                    }
                 }
-                //Сhecking head node
-                if (node == head && node.value == _value)
-                {
-                    node.next.prev = null;
-                    head = node.next;
-                }
-                //Checking tail node
-                if (node == tail && node.value == _value)
-                {
-                    node.prev.next = null;
-                    tail = node.prev;
-                }
-                else if (node.value == _value)
-                {
-                    //Setting the link use two links
-                    node.prev.next = node.next;
-                    node.next.prev = node.prev;
-                }
-                //Setting the link
+                //Setting the link (step next)
                 node = node.next;
             }
             return;
@@ -194,6 +197,7 @@ namespace AlgorithmsDataStructures
                     _nodeToInsert.next = node.next;
                     node.next.prev = _nodeToInsert;
                     node.next = _nodeToInsert;
+                    _nodeToInsert.prev = node;
                     return;
                 }
                 node = node.next;
