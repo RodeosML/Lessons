@@ -105,6 +105,22 @@ namespace AlgorithmsDataStructures
         }
 
         [TestMethod]
+        public void Remove_MustRemoveNodeWithOnceElementMatchingValue()
+        {
+            //Создаем экемпляр класса и заполняем его
+            var list = new LinkedList2();
+            var node2 = new Node(2);
+            list.AddInTail(node2);
+
+            var result = list.Remove(2);
+
+            //Проверяем целостность списка
+            Assert.IsTrue(result);
+            Assert.AreEqual(null, list.head);
+            Assert.AreEqual(null, list.tail);
+        }
+
+        [TestMethod]
         public void Remove_MustRemoveNodeWithMatchingValue()
         {
             //Создаем экемпляр класса и заполняем его
