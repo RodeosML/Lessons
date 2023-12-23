@@ -9,7 +9,7 @@ namespace AlgorithmsDataStructures
         public class DynArrayTests
         {
             [TestMethod]
-            public void Insert_ShouldInsertItemAtSpecifiedIndex()
+            public void Insert_ShouldInsertItemIndex()
             {
                 DynArray<int> checkDynArray = new DynArray<int>();
                 checkDynArray.Append(1);
@@ -26,7 +26,7 @@ namespace AlgorithmsDataStructures
 
             [TestMethod]
             [ExpectedException(typeof(System.IndexOutOfRangeException))]
-            public void Insert_ShouldThrowException_WhenIndexIsOutOfRange()
+            public void Insert_ShouldException_WhenIndexIsOutOfRange()
             {
                 DynArray<int> checkDynArray = new DynArray<int>();
 
@@ -34,7 +34,7 @@ namespace AlgorithmsDataStructures
             }
 
             [TestMethod]
-            public void Remove_ShouldRemoveItemAtSpecifiedIndex()
+            public void Remove_ShouldRemoveItemIndex()
             {
                 DynArray<int> checkDynArray = new DynArray<int>();
                 checkDynArray.Append(5);
@@ -49,7 +49,7 @@ namespace AlgorithmsDataStructures
 
             [TestMethod]
             [ExpectedException(typeof(System.IndexOutOfRangeException))]
-            public void Remove_ShouldThrowException_WhenIndexIsOutOfRange()
+            public void Remove_ShouldException_WhenIndexOutOfRange()
             {
                 
                 DynArray<int> checkDynArray = new DynArray<int>();
