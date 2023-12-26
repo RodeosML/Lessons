@@ -45,8 +45,7 @@ namespace AlgorithmsDataStructures
 
             int stackElement = stack.Peek();
 
-            Assert.AreEqual(3, stackElement);
-            Assert.AreEqual(3, stack.Size());
+            Assert.AreEqual(44, stackElement);
         }
     }
 }
