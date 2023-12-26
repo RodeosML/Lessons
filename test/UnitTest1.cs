@@ -1,33 +1,52 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AlgorithmsDataStructures;
 
-namespace LinkedListTests
+namespace AlgorithmsDataStructures
 {
+
     [TestClass]
-    public class LinkedListTests
+    public class StackTests
     {
         [TestMethod]
-        public void SumLists_GetTheSumOfValuesOnLinkedLists()
+        public void CheckMetodPush()
         {
-            //Создаем 1 связанный лист и добавляем значения
-            LinkedList list1 = new LinkedList();
-            list1.AddInTail(new Node(1));
-            list1.AddInTail(new Node(2));
-            list1.AddInTail(new Node(3));
-            //Создаем 2 связанный лист и добавляем значения
-            LinkedList list2 = new LinkedList();
-            list2.AddInTail(new Node(4));
-            list2.AddInTail(new Node(5));
-            list2.AddInTail(new Node(6));
+            Stack<int> stack = new Stack<int>();
 
-            LinkedList sumList = list1.SumLists(list1, list2);
+            stack.Push(10);
+            stack.Push(22);
+            stack.Push(33);
 
-            //Проверяем суммы по узлам листа
-            Assert.AreEqual(5, sumList.head.value);
-            Assert.AreEqual(7, sumList.head.next.value);
-            Assert.AreEqual(9, sumList.tail.value);
-            //Конечный узел
-            Assert.AreEqual(null, sumList.tail.next);
+            Assert.AreEqual(3, stack.Size());
+        }
+
+        [TestMethod]
+        public void CheckMethodPop()
+        {
+            Stack<int> stack = new Stack<int>();
+            stack.Push(10);
+            stack.Push(22);
+            stack.Push(33);
+            stack.Push(44);
+
+            int stackElement = stack.Pop();
+
+            Assert.AreEqual(44, stackElement);
+            Assert.AreEqual(3, stack.Size());
+        }
+
+        [TestMethod]
+        public void CheckMethodPeek()
+        {
+            Stack<int> stack = new Stack<int>();
+            stack.Push(10);
+            stack.Push(22);
+            stack.Push(33);
+            stack.Push(44);
+
+            int stackElement = stack.Peek();
+
+            Assert.AreEqual(3, stackElement);
+            Assert.AreEqual(3, stack.Size());
         }
     }
 }
