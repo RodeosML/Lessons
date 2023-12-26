@@ -5,52 +5,48 @@ using System.Collections.Generic;
 namespace AlgorithmsDataStructures
 {
 
-    public class Node
+    public class Stack<T>
     {
-        public int value;
-        public Node next;
-        public Node(int _value) { value = _value; }
-    }
+        List<T> stack;
+        int count;
 
-    public class LinkedList
-    {
-        public Node head;
-        public Node tail;
-
-        public LinkedList()
+        public Stack()
         {
-            head = null;
-            tail = null;
+            stack = new List<T>();
+            count = 0;
         }
 
-        public void AddInTail(Node _item)
+        public int Size()
         {
-            if (head == null) head = _item;
-            else tail.next = _item;
-            tail = _item;
+            if (count != 0) return count;
+
+            return 0;
         }
 
-        public LinkedList SumLists(LinkedList list1, LinkedList list2)
+        public T Pop()
         {
-            //Creating linkedlist for sum value
-            LinkedList sumList = new LinkedList();
-
-            //Setting the initial list node
-            Node node1 = list1.head;
-            Node node2 = list2.head;
-
-            while (node1 != null && node2 != null)
+            if (count != 0)
             {
-                //sum value
-                int sum = node1.value + node2.value;
-                sumList.AddInTail(new Node(sum));
+                T stackElement = stack[count - 1];
+                stack.RemoveAt(count - 1);
+                count--;
 
-                //Setting the link
-                node1 = node1.next;
-                node2 = node2.next;
+                return stackElement;
             }
+            return default(T);
+        }
 
-            return sumList;
+        public void Push(T val)
+        {
+            stack.Add(val);
+            count++;
+        }
+
+        public T Peek()
+        {
+            if (count != 0) return stack[count - 1];
+
+            return default(T);
         }
     }
 }
