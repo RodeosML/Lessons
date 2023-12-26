@@ -7,29 +7,27 @@ namespace AlgorithmsDataStructures
 
     public class Stack<T>
     {
-        List<T> stack;
-        int count;
+        LinkedList<T> stackPattern;
+        int countElements;
 
         public Stack()
         {
-            stack = new List<T>();
-            count = 0;
+            stackPattern = new LinkedList<T>();
+            countElements = 0;
         }
 
         public int Size()
         {
-            if (count != 0) return count;
-
-            return 0;
+            return countElements;
         }
 
         public T Pop()
         {
-            if (count != 0)
+            if (countElements != 0)
             {
-                T stackElement = stack[count - 1];
-                stack.RemoveAt(count - 1);
-                count--;
+                T stackElement = stackPattern.First.Value;
+                stackPattern.RemoveFirst();
+                countElements--;
 
                 return stackElement;
             }
@@ -38,13 +36,13 @@ namespace AlgorithmsDataStructures
 
         public void Push(T val)
         {
-            stack.Add(val);
-            count++;
+            stackPattern.AddFirst(val);
+            countElements++;
         }
 
         public T Peek()
         {
-            if (count != 0) return stack[count - 1];
+            if (countElements != 0) return stackPattern.First.Value;
 
             return default(T);
         }
