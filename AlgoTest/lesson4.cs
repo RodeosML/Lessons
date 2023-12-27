@@ -42,11 +42,90 @@ namespace AlgorithmsDataStructures
             count++;
         }
 
-        public T Peek()
+        public string CheckBalanceBrackets(string _valueString)
         {
-            if (count != 0) return stack[count - 1];
+            if (Check(_valueString) == false) return "Not balanced";
+                return "Balanced";
 
-            return default(T);
+            bool Check(string _valueString)
+            {
+            if (_valueString[0].ToString() == ")" || _valueString[_valueString.Length - 1].ToString() == "(")
+                return false;
+
+            Stack<string> stack = new Stack<string>();
+            for (int i = 0; i < _valueString.Length; i++)
+            {
+                if (_valueString[i] == '(') stack.Push(_valueString[i].ToString());
+                else if (_valueString[i] == ')' && stack.Size() != 0) stack.Pop();
+                else return false;
+            }
+            if (stack.Size() == 0) return true;
+            else
+                return false;
+            }
         }
+
+        public int EvaluatePostfixExpression(string _expression)
+        {
+            Stack<string> operators = new Stack<string>();
+            Stack<int> numbers = new Stack<int>();
+
+            var arrayString = _expression.Split(' ');
+
+            for (int i = arrayString.Length - 1; i >= 0; i--)
+            {
+                operators.Push(arrayString[i]);
+            }
+
+            int result = 0;
+            string cache;
+            int length = operators.Size();
+
+            for (int i = 0; i < length; i++)
+            {
+                switch (cache = operators.Pop())
+                {
+                    case "+":
+                        {
+                            result = numbers.Pop() + numbers.Pop();
+                            numbers.Push(result);
+                            break;
+                        }
+                    case "-":
+                        {
+                            var a = numbers.Pop();
+                            var b = numbers.Pop();
+                            result = b-a;
+                            numbers.Push(result);
+                            break;
+                        }
+                    case "*":
+                        {
+                            result = numbers.Pop() * numbers.Pop();
+                            numbers.Push(result);
+                            break;
+                        }
+                    case "/":
+                        {
+                            var a = numbers.Pop();
+                            var b = numbers.Pop();
+                            result = b / a;
+                            numbers.Push(result);
+                            break;
+                        }
+                    case "=":
+                        {
+                            return result;
+                        }
+                    default:
+                        {
+                            numbers.Push(Convert.ToInt32(cache.ToString()));
+                            break;
+                        }
+                }
+            }
+            return result;
+        }
+
     }
 }
