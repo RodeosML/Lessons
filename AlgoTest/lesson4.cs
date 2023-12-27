@@ -57,33 +57,32 @@ namespace AlgorithmsDataStructures
             {
                 if (_valueString[i] == '(') stack.Push(_valueString[i].ToString());
                 else if (_valueString[i] == ')' && stack.Size() != 0) stack.Pop();
-                else return false;
+                    return false;
             }
             if (stack.Size() == 0) return true;
-            else
                 return false;
             }
         }
 
         public int EvaluatePostfixExpression(string _expression)
         {
-            Stack<string> operators = new Stack<string>();
+            Stack<string> operatorsAndNumbers = new Stack<string>();
             Stack<int> numbers = new Stack<int>();
 
             var arrayString = _expression.Split(' ');
 
             for (int i = arrayString.Length - 1; i >= 0; i--)
             {
-                operators.Push(arrayString[i]);
+                operatorsAndNumbers.Push(arrayString[i]);
             }
 
             int result = 0;
             string cache;
-            int length = operators.Size();
+            int length = operatorsAndNumbers.Size();
 
             for (int i = 0; i < length; i++)
             {
-                switch (cache = operators.Pop())
+                switch (cache = operatorsAndNumbers.Pop())
                 {
                     case "+":
                         {
