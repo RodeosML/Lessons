@@ -9,35 +9,58 @@ namespace AlgorithmsDataStructures
     {
         
         [TestMethod]
-        public void CheckBalancedMethodBrackets()
+        public void EnqueueShouldItemAddedCountIncreases()
         {
-            Stack<string> stack = new Stack<string>();
+            Queue<int> queue = new Queue<int>();
 
-            var dataSet = "()()()()()()()";
+            queue.Enqueue(100);
 
-            Assert.AreEqual("Balanced", stack.CheckBalanceBrackets(dataSet));
+            Assert.AreEqual(1, queue.Size());
         }
 
         [TestMethod]
-        public void CheckNotBalancedMethodBrackets()
+        public void DequeueShouldItemRemovedCountDecreases()
         {
-            Stack<string> stack = new Stack<string>();
+            Queue<int> queue = new Queue<int>();
+            queue.Enqueue(5);
+            queue.Enqueue(10);
 
-            var dataSet = "(()()()()()(";
+            queue.Dequeue();
+            queue.Dequeue();
 
-            Assert.AreEqual("Not balanced", stack.CheckBalanceBrackets(dataSet));
+            Assert.AreEqual(0, queue.Size());
         }
 
         [TestMethod]
-        public void CheckEvaluatePostfixExpression()
+        public void DequeueShouldQueueEmptyReturnsDefault()
         {
-            Stack<string> stack = new Stack<string>();
+            Queue<int> queue = new Queue<int>();
 
-            string result = ("8 2 + 5 * 9 + =");
-            string result2 = ("8 12 - 4 / 5 + =");
-            
-            Assert.AreEqual(59, stack.EvaluatePostfixExpression(result));
-            Assert.AreEqual(4, stack.EvaluatePostfixExpression(result2));
+            int result = queue.Dequeue();
+
+            Assert.AreEqual(0, result);
+        }
+
+        [TestMethod]
+        public void SizeShouldQueueReturnsZero()
+        {
+            Queue<int> queue = new Queue<int>();
+
+            int size = queue.Size();
+
+            Assert.AreEqual(0, size);
+        }
+
+        [TestMethod]
+        public void SizeShouldItemsAddedReturnsCorrectSize()
+        {
+            Queue<int> queue = new Queue<int>();
+            queue.Enqueue(5);
+            queue.Enqueue(10);
+
+            int size = queue.Size();
+
+            Assert.AreEqual(2, size);
         }
     }
 }
