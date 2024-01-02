@@ -71,7 +71,7 @@ namespace AlgorithmsDataStructures
             {
                 if (dequeForChar.RemoveFront() != dequeForChar.RemoveTail())
                 {
-                    return "Nepolyndrom";
+                    return "Not a polyndrom";
                 }
             }
             return "Polyndrom";

@@ -98,7 +98,7 @@ namespace AlgorithmsDataStructures
             Deque<string> deque = new Deque<string>();
 
             Assert.AreEqual("Polyndrom", deque.CheckPolyndrom("довод"));
-            Assert.AreEqual("Nepolyndrom", deque.CheckPolyndrom("тапок"));
+            Assert.AreEqual("Not a polyndrom", deque.CheckPolyndrom("тапок"));
         }
     }
 }
