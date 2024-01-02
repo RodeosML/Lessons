@@ -1,66 +1,95 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AlgorithmsDataStructures;
+using System.Collections.Generic;
 
 namespace AlgorithmsDataStructures
 {
-
     [TestClass]
-    public class StackTests
+    public class Deque
     {
-        
         [TestMethod]
-        public void EnqueueShouldItemAddedCountIncreases()
+        public void ShouldAddItemsFrontOfDeque()
         {
-            Queue<int> queue = new Queue<int>();
+            Deque<int> deque = new Deque<int>();
 
-            queue.Enqueue(100);
+            deque.AddFront(1);
+            deque.AddFront(2);
+            deque.AddFront(3);
 
-            Assert.AreEqual(1, queue.Size());
+            //Removing all
+            Assert.AreEqual(3, deque.RemoveFront());
+            Assert.AreEqual(2, deque.RemoveFront());
+            Assert.AreEqual(1, deque.RemoveFront());
+
+            //Checking size
+            Assert.AreEqual(0, deque.Size());
         }
 
         [TestMethod]
-        public void DequeueShouldItemRemovedCountDecreases()
+        public void ShouldAddItemsTailOfDeque()
         {
-            Queue<int> queue = new Queue<int>();
-            queue.Enqueue(5);
-            queue.Enqueue(10);
+            Deque<int> deque = new Deque<int>();
 
-            queue.Dequeue();
-            queue.Dequeue();
+            deque.AddTail(1);
+            deque.AddTail(2);
+            deque.AddTail(3);
 
-            Assert.AreEqual(0, queue.Size());
+            //Removing all
+            Assert.AreEqual(1, deque.RemoveFront());
+            Assert.AreEqual(2, deque.RemoveFront());
+            Assert.AreEqual(3, deque.RemoveFront());
+
+            //Checking size
+            Assert.AreEqual(0, deque.Size());
         }
 
         [TestMethod]
-        public void DequeueShouldQueueEmptyReturnsDefault()
+        public void ShouldRemoveItemsFrontOfDeque()
         {
-            Queue<int> queue = new Queue<int>();
+            Deque<int> deque = new Deque<int>();
 
-            int result = queue.Dequeue();
+            deque.AddFront(1);
+            deque.AddFront(2);
+            deque.AddFront(3);
 
-            Assert.AreEqual(0, result);
+            //Removing all
+            Assert.AreEqual(3, deque.RemoveFront());
+            Assert.AreEqual(2, deque.RemoveFront());
+            Assert.AreEqual(1, deque.RemoveFront());
+
+            //Checking size
+            Assert.AreEqual(0, deque.Size());
         }
 
         [TestMethod]
-        public void SizeShouldQueueReturnsZero()
+        public void ShouldRemoveItemsTailOfDeque()
         {
-            Queue<int> queue = new Queue<int>();
+            Deque<int> deque = new Deque<int>();
 
-            int size = queue.Size();
+            deque.AddTail(1);
+            deque.AddTail(2);
+            deque.AddTail(3);
 
-            Assert.AreEqual(0, size);
+            //Removing all
+            Assert.AreEqual(3, deque.RemoveTail());
+            Assert.AreEqual(2, deque.RemoveTail());
+            Assert.AreEqual(1, deque.RemoveTail());
+
+            //Checking size
+            Assert.AreEqual(0, deque.Size());
         }
 
         [TestMethod]
-        public void SizeShouldItemsAddedReturnsCorrectSize()
+        public void ShouldCorrectSizeItemsOfDeque()
         {
-            Queue<int> queue = new Queue<int>();
-            queue.Enqueue(5);
-            queue.Enqueue(10);
+            Deque<int> deque = new Deque<int>();
 
-            int size = queue.Size();
+            deque.AddFront(1);
+            deque.AddFront(2);
+            deque.AddFront(3);
+            deque.AddFront(4);
 
-            Assert.AreEqual(2, size);
+            Assert.AreEqual(4, deque.Size());
         }
     }
 }
