@@ -91,5 +91,14 @@ namespace AlgorithmsDataStructures
 
             Assert.AreEqual(4, deque.Size());
         }
+
+        [TestMethod]
+        public void ShouldPolyndromOfDeque()
+        {
+            Deque<string> deque = new Deque<string>();
+
+            Assert.AreEqual("Polyndrom", deque.CheckPolyndrom("довод"));
+            Assert.AreEqual("Nepolyndrom", deque.CheckPolyndrom("тапок"));
+        }
     }
 }

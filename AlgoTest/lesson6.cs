@@ -57,6 +57,25 @@ namespace AlgorithmsDataStructures
             if (count != 0) return count;
             return 0;
         }
+
+        public string CheckPolyndrom(string _value)
+        {
+            Deque<char> dequeForChar = new Deque<char>();
+
+            foreach (char c in _value)
+            {
+                dequeForChar.AddFront(c);
+            }
+
+            while (dequeForChar.count > 1)
+            {
+                if (dequeForChar.RemoveFront() != dequeForChar.RemoveTail())
+                {
+                    return "Nepolyndrom";
+                }
+            }
+            return "Polyndrom";
+        }
     }
 
 }
