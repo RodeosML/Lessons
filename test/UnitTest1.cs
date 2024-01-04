@@ -5,100 +5,66 @@ using System.Collections.Generic;
 namespace AlgorithmsDataStructures
 {
     [TestClass]
-    public class Deque
+    public class OrderedList
     {
         [TestMethod]
-        public void ShouldAddItemsFrontOfDeque()
+        public void ShouldReturnCorrectNodeWhenValueExist()
         {
-            Deque<int> deque = new Deque<int>();
+            OrderedList<int> list = new OrderedList<int>(true);
+            list.Add(1);
+            list.Add(2);
+            list.Add(3);
 
-            deque.AddFront(1);
-            deque.AddFront(2);
-            deque.AddFront(3);
+            Node<int> result = list.Find(2);
 
-            //Removing all
-            Assert.AreEqual(3, deque.RemoveFront());
-            Assert.AreEqual(2, deque.RemoveFront());
-            Assert.AreEqual(1, deque.RemoveFront());
-
-            //Checking size
-            Assert.AreEqual(0, deque.Size());
+            Assert.AreEqual(2, result.value);
         }
 
         [TestMethod]
-        public void ShouldAddItemsTailOfDeque()
+        public void ShouldReturNullWhenValueDoesNotExist()
         {
-            Deque<int> deque = new Deque<int>();
+            OrderedList<int> list = new OrderedList<int>(true);
+            list.Add(1);
+            list.Add(2);
+            list.Add(3);
 
-            deque.AddTail(1);
-            deque.AddTail(2);
-            deque.AddTail(3);
+            Node<int> result = list.Find(4);
 
-            //Removing all
-            Assert.AreEqual(1, deque.RemoveFront());
-            Assert.AreEqual(2, deque.RemoveFront());
-            Assert.AreEqual(3, deque.RemoveFront());
-
-            //Checking size
-            Assert.AreEqual(0, deque.Size());
+            Assert.IsNull(result);
         }
 
         [TestMethod]
-        public void ShouldRemoveItemsFrontOfDeque()
+        public void ShouldAddValueInCorrectOrderUseAscending()
         {
-            Deque<int> deque = new Deque<int>();
+            OrderedList<int> list = new OrderedList<int>(true);
+            list.Add(2);
+            list.Add(1);
+            list.Add(3);
 
-            deque.AddFront(1);
-            deque.AddFront(2);
-            deque.AddFront(3);
+            Node<int> node1 = list.head;
+            Node<int> node2 = node1.next;
+            Node<int> node3 = node2.next;
 
-            //Removing all
-            Assert.AreEqual(3, deque.RemoveFront());
-            Assert.AreEqual(2, deque.RemoveFront());
-            Assert.AreEqual(1, deque.RemoveFront());
-
-            //Checking size
-            Assert.AreEqual(0, deque.Size());
+            Assert.AreEqual(1, node1.value);
+            Assert.AreEqual(2, node2.value);
+            Assert.AreEqual(3, node3.value);
         }
 
         [TestMethod]
-        public void ShouldRemoveItemsTailOfDeque()
+        public void ShouldAddValueInCorrectOrderUseDescending()
         {
-            Deque<int> deque = new Deque<int>();
+            OrderedList<int> list = new OrderedList<int>(false);
+            list.Add(2);
+            list.Add(1);
+            list.Add(3);
 
-            deque.AddTail(1);
-            deque.AddTail(2);
-            deque.AddTail(3);
+            Node<int> node1 = list.head;
+            Node<int> node2 = node1.next;
+            Node<int> node3 = node2.next;
 
-            //Removing all
-            Assert.AreEqual(3, deque.RemoveTail());
-            Assert.AreEqual(2, deque.RemoveTail());
-            Assert.AreEqual(1, deque.RemoveTail());
-
-            //Checking size
-            Assert.AreEqual(0, deque.Size());
-        }
-
-        [TestMethod]
-        public void ShouldCorrectSizeItemsOfDeque()
-        {
-            Deque<int> deque = new Deque<int>();
-
-            deque.AddFront(1);
-            deque.AddFront(2);
-            deque.AddFront(3);
-            deque.AddFront(4);
-
-            Assert.AreEqual(4, deque.Size());
-        }
-
-        [TestMethod]
-        public void ShouldPolyndromOfDeque()
-        {
-            Deque<string> deque = new Deque<string>();
-
-            Assert.AreEqual("Polyndrom", deque.CheckPolyndrom("довод"));
-            Assert.AreEqual("Not a polyndrom", deque.CheckPolyndrom("тапок"));
+            Assert.AreEqual(3, node1.value);
+            Assert.AreEqual(2, node2.value);
+            Assert.AreEqual(1, node3.value);
         }
     }
 }
