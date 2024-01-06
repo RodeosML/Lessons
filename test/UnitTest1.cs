@@ -1,70 +1,75 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AlgorithmsDataStructures;
 using System.Collections.Generic;
+using System;
+using System.Drawing;
 
 namespace AlgorithmsDataStructures
 {
     [TestClass]
-    public class OrderedList
+    public class HashCodeTests
     {
         [TestMethod]
-        public void ShouldReturnCorrectNodeWhenValueExist()
+        public void TestHashCode()
         {
-            OrderedList<int> list = new OrderedList<int>(true);
-            list.Add(1);
-            list.Add(2);
-            list.Add(3);
+            HashTable hash = new HashTable(19, 3);
+            string value = "test";
 
-            Node<int> result = list.Find(2);
+            int actualHashCode = hash.HashFun(value);
 
-            Assert.AreEqual(2, result.value);
+            Assert.IsTrue(actualHashCode >= 0 && actualHashCode < hash.size);
         }
 
         [TestMethod]
-        public void ShouldReturNullWhenValueDoesNotExist()
+        public void ShouldReturnCorrectIndexWithCollision()
         {
-            OrderedList<int> list = new OrderedList<int>(true);
-            list.Add(1);
-            list.Add(2);
-            list.Add(3);
+            HashTable hashTable = new HashTable(19, 3);
+            string value1 = "тест с коллизей";
+            string value2 = "коллизия";
 
-            Node<int> result = list.Find(4);
+            int index1 = hashTable.SeekSlot(value1);
+            hashTable.slots[index1] = value2;
+            int index2 = hashTable.SeekSlot(value2);
 
-            Assert.IsNull(result);
+            Assert.AreNotEqual(index1, index2);
         }
 
         [TestMethod]
-        public void ShouldAddValueInCorrectOrderUseAscending()
+        public void ShouldAddValueToHashTable()
         {
-            OrderedList<int> list = new OrderedList<int>(true);
-            list.Add(2);
-            list.Add(1);
-            list.Add(3);
+            HashTable hashTable = new HashTable(19, 3);
+            string value = "Проверка";
 
-            Node<int> node1 = list.head;
-            Node<int> node2 = node1.next;
-            Node<int> node3 = node2.next;
+            int index = hashTable.Put(value);
 
-            Assert.AreEqual(1, node1.value);
-            Assert.AreEqual(2, node2.value);
-            Assert.AreEqual(3, node3.value);
+            Assert.AreEqual(hashTable.slots[index], value);
         }
 
         [TestMethod]
-        public void ShouldAddValueInCorrectOrderUseDescending()
+        public void ShouldReturnCorrectIndexWithExistingValue()
         {
-            OrderedList<int> list = new OrderedList<int>(false);
-            list.Add(2);
-            list.Add(1);
-            list.Add(3);
+            HashTable hashTable = new HashTable(19, 3);
+            string value = "Проверка";
 
-            Node<int> node1 = list.head;
-            Node<int> node2 = node1.next;
-            Node<int> node3 = node2.next;
+            int index = hashTable.Put(value);
 
-            Assert.AreEqual(3, node1.value);
-            Assert.AreEqual(2, node2.value);
-            Assert.AreEqual(1, node3.value);
+            int foundIndex = hashTable.Find(value);
+
+            Assert.AreEqual(index, foundIndex);
         }
+
+        [TestMethod]
+        public void ShouldReturnNegativeIndexWithNonExistingValue()
+        {
+            HashTable hashTable = new HashTable(19, 3);
+            string value = "Проверка";
+
+            hashTable.Put("Находки");
+
+            int foundIndex = hashTable.Find(value);
+
+            Assert.AreEqual(-1, foundIndex);
+        }
+
     }
 }
