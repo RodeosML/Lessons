@@ -7,69 +7,72 @@ using System.Drawing;
 namespace AlgorithmsDataStructures
 {
     [TestClass]
-    public class HashCodeTests
+    public class NativeDictionaryTests
     {
         [TestMethod]
-        public void TestHashCode()
+        public void ShouldPutNewKeyAddValueToDictionary()
         {
-            HashTable hash = new HashTable(19, 3);
-            string value = "test";
+            NativeDictionary<int> dictionary = new NativeDictionary<int>(10);
 
-            int actualHashCode = hash.HashFun(value);
+            dictionary.Put("первое значение", 1);
 
-            Assert.IsTrue(actualHashCode >= 0 && actualHashCode < hash.size);
+            Assert.AreEqual(1, dictionary.Get("первое значение"));
         }
 
         [TestMethod]
-        public void ShouldReturnCorrectIndexWithCollision()
+        public void ShouldPutExistingKeyWithUpdateValueInDictionary()
         {
-            HashTable hashTable = new HashTable(19, 3);
-            string value1 = "тест с коллизей";
-            string value2 = "коллизия";
+            NativeDictionary<int> dictionary = new NativeDictionary<int>(10);
+            dictionary.Put("первое значение", 1);
 
-            int index1 = hashTable.SeekSlot(value1);
-            hashTable.slots[index1] = value2;
-            int index2 = hashTable.SeekSlot(value2);
+            dictionary.Put("первое значение", 2);
 
-            Assert.AreNotEqual(index1, index2);
+            Assert.AreEqual(2, dictionary.Get("первое значение"));
         }
 
         [TestMethod]
-        public void ShouldAddValueToHashTable()
+        public void ShouldCheckKeyReturnTrue()
         {
-            HashTable hashTable = new HashTable(19, 3);
-            string value = "Проверка";
+            NativeDictionary<int> dictionary = new NativeDictionary<int>(10);
+            dictionary.Put("первое значение", 1);
 
-            int index = hashTable.Put(value);
+            bool isKeyPresent = dictionary.IsKey("первое значение");
 
-            Assert.AreEqual(hashTable.slots[index], value);
+            Assert.IsTrue(isKeyPresent);
         }
 
         [TestMethod]
-        public void ShouldReturnCorrectIndexWithExistingValue()
+        public void ShoulAbsentKeyReturnFalse()
         {
-            HashTable hashTable = new HashTable(19, 3);
-            string value = "Проверка";
+            NativeDictionary<int> dictionary = new NativeDictionary<int>(10);
+            dictionary.Put("первое значение", 1);
 
-            int index = hashTable.Put(value);
+            bool isKeyPresent = dictionary.IsKey("второе значение");
 
-            int foundIndex = hashTable.Find(value);
-
-            Assert.AreEqual(index, foundIndex);
+            Assert.IsFalse(isKeyPresent);
         }
 
         [TestMethod]
-        public void ShouldReturnNegativeIndexWithNonExistingValue()
+        public void ShouldGetPresentKeyReturnValue()
         {
-            HashTable hashTable = new HashTable(19, 3);
-            string value = "Проверка";
+            NativeDictionary<int> dictionary = new NativeDictionary<int>(10);
+            dictionary.Put("первое значение", 1);
 
-            hashTable.Put("Находки");
+            int value = dictionary.Get("первое значение");
 
-            int foundIndex = hashTable.Find(value);
-
-            Assert.AreEqual(-1, foundIndex);
+            Assert.AreEqual(1, value);
         }
 
+        [TestMethod]
+        public void ShouldGetAbsentKeyReturnDefaultValue()
+        {
+            NativeDictionary<int> dictionary = new NativeDictionary<int>(10);
+            dictionary.Put("первое значение", 1);
+
+            int value = dictionary.Get("второе значение");
+
+            Assert.AreEqual(default(int), value);
+        }
     }
+
 }
