@@ -7,72 +7,160 @@ using System.Drawing;
 namespace AlgorithmsDataStructures
 {
     [TestClass]
-    public class NativeDictionaryTests
+    public class PowerSetTests
     {
         [TestMethod]
-        public void ShouldPutNewKeyAddValueToDictionary()
+        public void Size_ReturnsCorrectSize()
         {
-            NativeDictionary<int> dictionary = new NativeDictionary<int>(10);
+            PowerSet<string> powerSet = new PowerSet<string>();
 
-            dictionary.Put("первое значение", 1);
-
-            Assert.AreEqual(1, dictionary.Get("первое значение"));
+            int size = powerSet.Size();
+            Assert.AreEqual(0, size);
         }
 
         [TestMethod]
-        public void ShouldPutExistingKeyWithUpdateValueInDictionary()
+        public void Put_AddsValueToPowerSet()
         {
-            NativeDictionary<int> dictionary = new NativeDictionary<int>(10);
-            dictionary.Put("первое значение", 1);
+            PowerSet<string> powerSet = new PowerSet<string>();
 
-            dictionary.Put("первое значение", 2);
+            powerSet.Put("проверка");
 
-            Assert.AreEqual(2, dictionary.Get("первое значение"));
+            Assert.IsTrue(powerSet.Get("проверка"));
         }
 
         [TestMethod]
-        public void ShouldCheckKeyReturnTrue()
+        public void Get_ReturnsTrueIfзначениеExists()
         {
-            NativeDictionary<int> dictionary = new NativeDictionary<int>(10);
-            dictionary.Put("первое значение", 1);
+            PowerSet<string> powerSet = new PowerSet<string>();
+            powerSet.Put("проверка");
 
-            bool isKeyPresent = dictionary.IsKey("первое значение");
+            bool result = powerSet.Get("проверка");
 
-            Assert.IsTrue(isKeyPresent);
+            Assert.IsTrue(result);
         }
 
         [TestMethod]
-        public void ShoulAbsentKeyReturnFalse()
+        public void Get_ReturnsFalseIfValueDoesNotExist()
         {
-            NativeDictionary<int> dictionary = new NativeDictionary<int>(10);
-            dictionary.Put("первое значение", 1);
+            PowerSet<string> powerSet = new PowerSet<string>();
 
-            bool isKeyPresent = dictionary.IsKey("второе значение");
+            bool result = powerSet.Get("проверка");
 
-            Assert.IsFalse(isKeyPresent);
+            Assert.IsFalse(result);
         }
 
         [TestMethod]
-        public void ShouldGetPresentKeyReturnValue()
+        public void Remove_RemovesValueFromPowerSet()
         {
-            NativeDictionary<int> dictionary = new NativeDictionary<int>(10);
-            dictionary.Put("первое значение", 1);
+            PowerSet<string> powerSet = new PowerSet<string>();
+            powerSet.Put("проверка");
 
-            int value = dictionary.Get("первое значение");
+            bool result = powerSet.Remove("проверка");
 
-            Assert.AreEqual(1, value);
+            Assert.IsFalse(powerSet.Get("проверка"));
         }
 
         [TestMethod]
-        public void ShouldGetAbsentKeyReturnDefaultValue()
+        public void Remove_ReturnsFalseIfValueDoesNotExist()
         {
-            NativeDictionary<int> dictionary = new NativeDictionary<int>(10);
-            dictionary.Put("первое значение", 1);
+            PowerSet<string> powerSet = new PowerSet<string>();
 
-            int value = dictionary.Get("второе значение");
+            bool result = powerSet.Remove("проверка");
 
-            Assert.AreEqual(default(int), value);
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void Intersection_ReturnsIntersectionOfTwoPowerSets()
+        {
+            PowerSet<string> powerSet1 = new PowerSet<string>();
+            powerSet1.Put("проверка_1");
+            powerSet1.Put("проверка_2");
+            powerSet1.Put("проверка_3");
+
+            PowerSet<string> powerSet2 = new PowerSet<string>();
+            powerSet2.Put("проверка_2");
+            powerSet2.Put("проверка_3");
+            powerSet2.Put("проверка_5");
+
+            PowerSet<string> result = powerSet1.Intersection(powerSet2);
+
+            Assert.IsTrue(result.Get("проверка_2"));
+            Assert.IsTrue(result.Get("проверка_3"));
+            Assert.AreEqual(2, result.Size());
+        }
+
+        [TestMethod]
+        public void Union_ReturnsUnionOfTwoPowerSets()
+        {
+            PowerSet<string> powerSet1 = new PowerSet<string>();
+            powerSet1.Put("проверка_1");
+            powerSet1.Put("проверка_2");
+
+            PowerSet<string> powerSet2 = new PowerSet<string>();
+            powerSet2.Put("проверка_2");
+            powerSet2.Put("проверка_3");
+
+            PowerSet<string> result = powerSet1.Union(powerSet2);
+
+            Assert.IsTrue(result.Get("проверка_1"));
+            Assert.IsTrue(result.Get("проверка_2"));
+            Assert.IsTrue(result.Get("проверка_3"));
+            Assert.AreEqual(3, result.Size());
+        }
+
+        [TestMethod]
+        public void Difference_ReturnsDifferenceOfTwoPowerSets()
+        {
+            PowerSet<string> powerSet1 = new PowerSet<string>();
+            powerSet1.Put("проверка_1");
+            powerSet1.Put("проверка_2");
+            powerSet1.Put("проверка_3");
+
+            PowerSet<string> powerSet2 = new PowerSet<string>();
+            powerSet2.Put("проверка_2");
+            powerSet2.Put("проверка_3");
+
+            PowerSet<string> result = powerSet1.Difference(powerSet2);
+
+            Assert.IsTrue(result.Get("проверка_1"));
+            Assert.IsFalse(result.Get("проверка_2"));
+            Assert.IsFalse(result.Get("проверка_3"));
+            Assert.AreEqual(1, result.Size());
+        }
+
+        [TestMethod]
+        public void IsSubset_ReturnsTrueIfPowerSetIsSubsetOfAnotherPowerSet()
+        {
+            PowerSet<string> powerSet1 = new PowerSet<string>();
+            powerSet1.Put("проверка_1");
+            powerSet1.Put("проверка_2");
+            powerSet1.Put("проверка_3");
+
+            PowerSet<string> powerSet2 = new PowerSet<string>();
+            powerSet2.Put("проверка_1");
+            powerSet2.Put("проверка_2");
+
+            bool result = powerSet1.IsSubset(powerSet2);
+
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void IsSubset_ReturnsFalseIfPowerSetIsNotSubsetOfAnotherPowerSet()
+        {
+            PowerSet<string> powerSet1 = new PowerSet<string>();
+            powerSet1.Put("проверка_1");
+            powerSet1.Put("проверка_2");
+            powerSet1.Put("проверка_3");
+
+            PowerSet<string> powerSet2 = new PowerSet<string>();
+            powerSet2.Put("проверка_1");
+            powerSet2.Put("проверка_4");
+
+            bool result = powerSet1.IsSubset(powerSet2);
+
+            Assert.IsFalse(result);
         }
     }
-
 }
