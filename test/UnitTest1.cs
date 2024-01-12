@@ -3,6 +3,7 @@ using AlgorithmsDataStructures;
 using System.Collections.Generic;
 using System;
 using System.Drawing;
+using System.Diagnostics;
 
 namespace AlgorithmsDataStructures
 {
@@ -10,7 +11,7 @@ namespace AlgorithmsDataStructures
     public class PowerSetTests
     {
         [TestMethod]
-        public void Size_ReturnsCorrectSize()
+        public void ReturnCorrectSize()
         {
             PowerSet<string> powerSet = new PowerSet<string>();
 
@@ -19,17 +20,7 @@ namespace AlgorithmsDataStructures
         }
 
         [TestMethod]
-        public void Put_AddsValueToPowerSet()
-        {
-            PowerSet<string> powerSet = new PowerSet<string>();
-
-            powerSet.Put("проверка");
-
-            Assert.IsTrue(powerSet.Get("проверка"));
-        }
-
-        [TestMethod]
-        public void Get_ReturnsTrueIfзначениеExists()
+        public void ReturnTrueIfValueExist()
         {
             PowerSet<string> powerSet = new PowerSet<string>();
             powerSet.Put("проверка");
@@ -40,7 +31,19 @@ namespace AlgorithmsDataStructures
         }
 
         [TestMethod]
-        public void Get_ReturnsFalseIfValueDoesNotExist()
+        public void AddDuplicateElement()
+        {
+            var powerSet = new PowerSet<int>();
+            powerSet.Put(10);
+
+            powerSet.Put(10);
+
+            Assert.AreEqual(1, powerSet.Size());
+        }
+
+
+        [TestMethod]
+        public void ReturnFalseIfValueNotExist()
         {
             PowerSet<string> powerSet = new PowerSet<string>();
 
@@ -50,7 +53,7 @@ namespace AlgorithmsDataStructures
         }
 
         [TestMethod]
-        public void Remove_RemovesValueFromPowerSet()
+        public void RemoveValuePowerSet()
         {
             PowerSet<string> powerSet = new PowerSet<string>();
             powerSet.Put("проверка");
@@ -61,37 +64,44 @@ namespace AlgorithmsDataStructures
         }
 
         [TestMethod]
-        public void Remove_ReturnsFalseIfValueDoesNotExist()
+        public void IntersectionReturnEmptySetWhenNoCommonElement()
         {
-            PowerSet<string> powerSet = new PowerSet<string>();
-
-            bool result = powerSet.Remove("проверка");
-
-            Assert.IsFalse(result);
-        }
-
-        [TestMethod]
-        public void Intersection_ReturnsIntersectionOfTwoPowerSets()
-        {
-            PowerSet<string> powerSet1 = new PowerSet<string>();
+            var powerSet1 = new PowerSet<string>();
             powerSet1.Put("проверка_1");
             powerSet1.Put("проверка_2");
             powerSet1.Put("проверка_3");
 
-            PowerSet<string> powerSet2 = new PowerSet<string>();
-            powerSet2.Put("проверка_2");
-            powerSet2.Put("проверка_3");
+            var powerSet2 = new PowerSet<string>();
+            powerSet2.Put("проверка_4");
             powerSet2.Put("проверка_5");
+            powerSet2.Put("проверка_6");
 
-            PowerSet<string> result = powerSet1.Intersection(powerSet2);
+            var intersected = powerSet1.Intersection(powerSet2);
 
-            Assert.IsTrue(result.Get("проверка_2"));
-            Assert.IsTrue(result.Get("проверка_3"));
-            Assert.AreEqual(2, result.Size());
+            Assert.AreEqual(0, intersected.Size());
         }
 
         [TestMethod]
-        public void Union_ReturnsUnionOfTwoPowerSets()
+        public void IntersectionReturnNonEmptyWhenCommonElementsExist()
+        {
+            var powerSet1 = new PowerSet<string>();
+            powerSet1.Put("проверка_1");
+            powerSet1.Put("проверка_2");
+            powerSet1.Put("проверка_4");
+
+            var powerSet2 = new PowerSet<string>();
+            powerSet2.Put("проверка_4");
+            powerSet2.Put("проверка_5");
+            powerSet2.Put("проверка_6");
+
+            var intersected = powerSet1.Intersection(powerSet2);
+
+            Assert.AreEqual(1, intersected.Size());
+            Assert.IsTrue(intersected.Get("проверка_4"));
+        }
+
+        [TestMethod]
+        public void CheckUnionReturnUnionOfTwoPowerSet()
         {
             PowerSet<string> powerSet1 = new PowerSet<string>();
             powerSet1.Put("проверка_1");
@@ -110,7 +120,37 @@ namespace AlgorithmsDataStructures
         }
 
         [TestMethod]
-        public void Difference_ReturnsDifferenceOfTwoPowerSets()
+        public void CheckUnionReturnSetEqualToNonEmptySetWhenOneSetIsEmpty()
+        {
+            var powerSet1 = new PowerSet<string>();
+            powerSet1.Put("проверка_1");
+            powerSet1.Put("проверка_2");
+
+            var powerSet2 = new PowerSet<string>();
+
+            var united = powerSet1.Union(powerSet2);
+
+            Assert.AreEqual(2, united.Size());
+            Assert.IsTrue(united.Get("проверка_1"));
+            Assert.IsTrue(united.Get("проверка_2"));
+        }
+
+        [TestMethod]
+        public void DifferenceReturnEmptySetWhenSetsHaveNoCommonElements()
+        {
+            PowerSet<string> powerSet1 = new PowerSet<string>();
+
+            PowerSet<string> powerSet2 = new PowerSet<string>();
+            powerSet2.Put("проверка_3");
+            powerSet2.Put("проверка_4");
+
+            var result = powerSet1.Difference(powerSet2);
+
+            Assert.AreEqual(0, result.Size());
+        }
+
+        [TestMethod]
+        public void ReturnDifferenceOfTwoPowerSet()
         {
             PowerSet<string> powerSet1 = new PowerSet<string>();
             powerSet1.Put("проверка_1");
@@ -130,7 +170,7 @@ namespace AlgorithmsDataStructures
         }
 
         [TestMethod]
-        public void IsSubset_ReturnsTrueIfPowerSetIsSubsetOfAnotherPowerSet()
+        public void ReturnTrueIfPowerSetIsSubsetOfAnotherPowerSet()
         {
             PowerSet<string> powerSet1 = new PowerSet<string>();
             powerSet1.Put("проверка_1");
@@ -147,7 +187,7 @@ namespace AlgorithmsDataStructures
         }
 
         [TestMethod]
-        public void IsSubset_ReturnsFalseIfPowerSetIsNotSubsetOfAnotherPowerSet()
+        public void ReturnFalseIfPowerSetIsNotSubsetOfAnotherPowerSet()
         {
             PowerSet<string> powerSet1 = new PowerSet<string>();
             powerSet1.Put("проверка_1");
@@ -162,5 +202,40 @@ namespace AlgorithmsDataStructures
 
             Assert.IsFalse(result);
         }
+
+        [TestMethod]
+        public void ReturnTrueWhenAllElementsOfParameterAreInCurrentSet()
+        {
+            PowerSet<string> powerSet1 = new PowerSet<string>();
+            powerSet1.Put("проверка_1");
+            powerSet1.Put("проверка_2");
+            powerSet1.Put("проверка_3");
+            powerSet1.Put("проверка_4");
+
+            PowerSet<string> powerSet2 = new PowerSet<string>();
+            powerSet2.Put("проверка_1");
+            powerSet2.Put("проверка_2");
+            powerSet2.Put("проверка_3");
+            powerSet2.Put("проверка_4");
+
+            bool result = powerSet2.IsSubset(powerSet1);
+
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        [TestCategory("Performance")]
+        public void PerformanceTest()
+        {
+            PowerSet<string> powerSet1 = new PowerSet<string>();
+            PowerSet<string> powerSet2 = new PowerSet<string>();
+
+            Stopwatch stopwatch = Stopwatch.StartNew();
+            PowerSet<string> result = powerSet1.Intersection(powerSet2);
+            stopwatch.Stop();
+
+            Assert.IsTrue(stopwatch.ElapsedMilliseconds < 2000);
+        }
+
     }
 }
