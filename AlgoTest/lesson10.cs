@@ -1,111 +1,51 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System;
+using System.IO;
 
 namespace AlgorithmsDataStructures
 {
-
-    public class PowerSet<T>
+    public class BloomFilter
     {
-        public int capacity;
-        public List<T> slots;
+        public int filter_len;
+        public int filter;
 
-        public PowerSet()
+        public BloomFilter(int f_len)
         {
-            slots = new List<T>();
-            capacity = 0;
+            filter_len = f_len;
+            filter = 0;
         }
 
-        public int Size()
+        public int Hash1(string str1)
         {
-            return capacity;
+            int result = 0;
+            for (int i = 0; i < str1.Length; i++)
+            {
+                int code = (int)str1[i];
+                result = Math.Abs(result * 17 + code) % filter_len;
+            }
+            return 1 << result;
+        }
+        public int Hash2(string str1)
+        {
+            int result = 0;
+            for (int i = 0; i < str1.Length; i++)
+            {
+                int code = (int)str1[i];
+                result = Math.Abs(result * 223 + code) % filter_len;
+            }
+            return 1 << result;
         }
 
-        public void Put(T value)
+        public void Add(string str1)
         {
-            if (!Get(value))
-            {
-                slots.Add(value);
-                capacity++;
-            }
+            filter |= Hash1(str1);
+            filter |= Hash2(str1);
         }
 
-        public bool Get(T value)
+        public bool IsValue(string str1)
         {
-            return slots.Contains(value);
-        }
-
-        public bool Remove(T value)
-        {
-            if (Get(value))
-            {
-                slots.Remove(value);
-                capacity--;
-                return true;
-            }
-            return false;
-        }
-
-        public PowerSet<T> Intersection(PowerSet<T> set2)
-        {
-            PowerSet<T> intersected = new PowerSet<T>();
-            foreach (T item in slots)
-            {
-                if (set2.Get(item))
-                {
-                    intersected.Put(item);
-                }
-            }
-            return intersected;
-        }
-
-        public PowerSet<T> Union(PowerSet<T> set2)
-        {
-            PowerSet<T> united = new PowerSet<T>();
-            foreach (var item in slots)
-            {
-                united.Put(item);
-            }
-
-            foreach (var item in set2.slots)
-            {
-                united.Put(item);
-            }
-
-            return united;
-        }
-
-        public PowerSet<T> Difference(PowerSet<T> set2)
-        {
-            PowerSet<T> differed = new PowerSet<T>();
-            foreach (T item in slots)
-            {
-                differed.Put(item);
-            }
-
-            foreach (T item in set2.slots)
-            {
-                differed.Remove(item);
-            }
-            
-            return differed;
-        }
-
-        public bool IsSubset(PowerSet<T> set2)
-        {
-            if (slots.Count < set2.Size())
-            {
-                return false;
-            }
-
-            foreach (T item in set2.slots)
-            {
-                if (!slots.Contains(item))
-                {
-                    return false;
-                }
-            }
-
-            return true;
+            int result = Hash1(str1) | Hash2(str1);
+            return ((filter & result) == result);
         }
     }
 }
