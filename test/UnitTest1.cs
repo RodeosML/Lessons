@@ -4,24 +4,38 @@ using System.Collections.Generic;
 using System;
 using System.Drawing;
 using System.Diagnostics;
+using AlgoDataStructures.AlgoPart1;
 
 namespace AlgorithmsDataStructures
 {
     [TestClass]
-    public class BloomFilterWithArrayTests
+    public class NativeCacheTests
     {
         [TestMethod]
-        public void TestAddAndIsValue()
+        public void TestPut()
         {
-            BloomFilterWithArray filter = new BloomFilterWithArray(32);
+            NativeCache<int> cache = new NativeCache<int>(5);
+            cache.Put("key1", 1);
+            cache.Put("key2", 2);
+            cache.Put("key3", 3);
+            cache.Put("key4", 4);
+            cache.Put("key5", 5);
 
-            filter.Add("значение1");
-            filter.Add("значение2");
-            filter.Add("значение3");
 
-            Assert.IsTrue(filter.IsValue("значение1"));
-            Assert.IsTrue(filter.IsValue("значение2"));
-            Assert.IsTrue(filter.IsValue("значение3"));
+            Assert.AreEqual(1, cache.Get("key1"));
+            Assert.AreEqual(2, cache.Get("key2"));
+            Assert.AreEqual(3, cache.Get("key3"));
+            Assert.AreEqual(4, cache.Get("key4"));
+            Assert.AreEqual(5, cache.Get("key5"));
+
+            cache.Put("key6", 6);
+
+            Assert.AreNotEqual(1, cache.Get("key1")); //Displaced 
+            Assert.AreEqual(2, cache.Get("key2"));
+            Assert.AreEqual(3, cache.Get("key3"));
+            Assert.AreEqual(4, cache.Get("key4"));
+            Assert.AreEqual(5, cache.Get("key5"));
+            Assert.AreEqual(6, cache.Get("key6"));
         }
     }
 }
