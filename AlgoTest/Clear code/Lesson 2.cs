@@ -1,12 +1,12 @@
 ﻿
 //6.1
-toggleVisibility - toggleVisibilityPassoword // параметр, сигнализирующий, что пароль исчезает
+toggleVisibility - switchToShowPassword // параметр, сигнализирующий, что пароль исчезает
 
 vcr - viewContainerTimer // ссылка на контейнер с таймером
 
 hasEmployeeN - containNameEmployee // параметр, сигнализирующий, что содержится наименование сотрудника
 
-getTimeRange - getTimeRangeOnMainProfile //запрос на получение диапазона значений в главном профиле
+getTimeRange - getTimeRangeOnMain //запрос на получение диапазона значений в главном профиле
 
 add - addRecord //функция добавления записей в список записей
 
